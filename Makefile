@@ -22,6 +22,8 @@ Core/Src/gw_lcd.c \
 Core/Src/main.c \
 Core/Src/bq24072.c \
 Core/Src/porting/lib/lz4_depack.c \
+Core/Src/porting/lib/heatshrink/src/heatshrink_decoder.c \
+Core/Src/porting/lib/heatshrink/src/heatshrink_encoder.c \
 Core/Src/porting/common.c \
 Core/Src/porting/odroid_audio.c \
 Core/Src/porting/odroid_display.c \
@@ -132,6 +134,7 @@ Core/Src/porting/pce/main_pce.c
 C_INCLUDES +=  \
 -ICore/Inc \
 -ICore/Src/porting/lib \
+-ICore/Src/porting/lib/heatshrink/include \
 -Iretro-go-stm32/nofrendo-go/components/nofrendo/cpu \
 -Iretro-go-stm32/nofrendo-go/components/nofrendo/mappers \
 -Iretro-go-stm32/nofrendo-go/components/nofrendo/nes \
