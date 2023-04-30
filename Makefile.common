@@ -267,7 +267,7 @@ AS_DEFS +=
 
 # C defines
 C_DEFS +=  \
--DINTFLASH_BANK=$(INTFLASH_BANK) \
+-DINTFLASH_ADDRESS=$(INTFLASH_ADDRESS) \
 -DEXTFLASH_FORCE_SPI=$(EXTFLASH_FORCE_SPI) \
 -DUSE_HAL_DRIVER \
 -DSTM32H7B0xx \
@@ -321,9 +321,9 @@ LDFLAGS += -Wl,--defsym=__EXTFLASH_TOTAL_LENGTH__=$(EXTFLASH_SIZE)
 LDFLAGS += -Wl,--defsym=ENABLE_SCREENSHOT=$(ENABLE_SCREENSHOT)
 
 ifeq ($(INTFLASH_BANK), 1)
-	INTFLASH_ADDRESS = 0x08000000
+	INTFLASH_ADDRESS ?= 0x08000000
 else ifeq ($(INTFLASH_BANK), 2)
-	INTFLASH_ADDRESS = 0x08100000
+	INTFLASH_ADDRESS ?= 0x08100000
 endif
 
 LDFLAGS += -Wl,--defsym=__INTFLASH__=$(INTFLASH_ADDRESS)
@@ -418,8 +418,8 @@ CheckTools:
 		) \
 		done"
 
-	@# Check that GCC version 10 or 11 is used
-	$(V)$(CC) -v 2>&1 | grep "gcc version 1[01]" > /dev/null || \
+	@# Check that GCC version 10 or 11 or 12 is used
+	$(V)$(CC) -v 2>&1 | grep "gcc version 1[012]" > /dev/null || \
 		( \
 			echo -e "\n\n\nPlease use GCC version 10\n\n\nYou are using:" && \
 			$(CC) -v 2>&1 | grep "gcc version" ; \
@@ -640,6 +640,7 @@ help:
 	@echo "  LARGE_FLASH         - Sets the external flash size to 16MB  (deprecated)"
 	@echo "  EXTFLASH_OFFSET     - Places the data at an offset in the external flash (useful for dual boot)"
 	@echo "  INTFLASH_BANK       - Sets the internal flash bank. Valid values {1,2} (default=1)."
+	@echo "  INTFLASH_ADDRESS    - Explicit internal flash address. If not provided, derived from INTFLASH_BANK.
 	@echo "  COMPRESS            - Configures ROM compression, Valid values {0,lz4,zopfli,lzma} (default=lzma)."
 	@echo "  STATE_SAVING        - Set to 0 to disable state saving (default=1)"
 	@echo "  RESET_DBGMCU        - Configures if DBGMCU should be reset after flashing."
@@ -654,6 +655,7 @@ help:
 	@echo "  LARGE_FLASH=$(LARGE_FLASH)"
 	@echo "  EXTFLASH_OFFSET=$(EXTFLASH_OFFSET)"
 	@echo "  INTFLASH_BANK=$(INTFLASH_BANK)"
+	@echo "  INTFLASH_ADDRESS=$(INTFLASH_ADDRESS)"
 	@echo "  COMPRESS=$(COMPRESS)"
 	@echo "  STATE_SAVING=$(STATE_SAVING)"
 	@echo "  RESET_DBGMCU=$(RESET_DBGMCU)"
