@@ -275,7 +275,7 @@ void SystemInit (void)
   // Bank 2
   SCB->VTOR = FLASH_BANK2_BASE | VECT_TAB_OFFSET; /* Vector Table Relocation in Internal FLASH */
 #else
-#error Unable to detect INTFLASH_BANK 1/2 from INTFLASH_ADDRESS " #INTFLASH_ADDRESS
+#error "Unable to detect INTFLASH_BANK 1/2 from INTFLASH_ADDRESS " #INTFLASH_ADDRESS
 #endif
 
 #endif
